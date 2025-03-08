@@ -5,22 +5,46 @@ import './SignUp.css';
 function SignUp() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState(''); // Add this line
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (!username || !password || !confirmPassword) {
       setError('Please fill in all fields.');
       return;
     }
+
     if (password !== confirmPassword) {
       setError('Passwords do not match.');
       return;
     }
-    // Simulate signup logic
-    navigate('/login');
+
+    try {
+      // Make API call to the backend signup endpoint
+      const response = await fetch('http://localhost:5000/api/auth/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        // If signup is successful, navigate to the login page
+        navigate('/login');
+      } else {
+        // If signup fails, display the error message from the server
+        setError(data.error || 'Error creating user.');
+      }
+    } catch (error) {
+      console.error('Error signing up:', error);
+      setError('An error occurred while signing up. Please try again.');
+    }
   };
 
   return (
@@ -30,7 +54,7 @@ function SignUp() {
         <p className="signup-subtitle">Join us to get started</p>
         {error && <p className="error-message">{error}</p>}
         <form onSubmit={handleSubmit}>
-        <div className="input-group">
+          <div className="input-group">
             <label htmlFor="username">Username</label>
             <input
               type="text"
@@ -41,7 +65,7 @@ function SignUp() {
               aria-label="Username input"
             />
           </div>
-        <div className="input-group">
+          <div className="input-group">
             <label htmlFor="password">Password</label>
             <input
               type="password"

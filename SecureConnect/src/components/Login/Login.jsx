@@ -8,7 +8,7 @@ function Login() {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!username || !password) {
@@ -16,11 +16,29 @@ function Login() {
       return;
     }
 
-    // Simulate login logic
-    if (username === 'user' && password === 'password') {
-      navigate('/welcome', { state: { username } });
-    } else {
-      setError('Invalid username or password.');
+    try {
+      // Make API call to the backend login endpoint
+      const response = await fetch('http://localhost:5000/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        // If login is successful, store the token and navigate to the welcome page
+        localStorage.setItem('token', data.token); // Store the token in localStorage
+        navigate('/welcome', { state: { username } }); // Navigate to the welcome page
+      } else {
+        // If login fails, display the error message from the server
+        setError(data.error || 'Invalid username or password.');
+      }
+    } catch (error) {
+      console.error('Error logging in:', error);
+      setError('An error occurred while logging in. Please try again.');
     }
   };
 
