@@ -1,0 +1,90 @@
+.home-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+  font-family: 'Inter', system-ui, sans-serif;
+  color: #2c3e50;
+  text-align: center;
+  padding: 1rem;
+}
+
+.home-content {
+  width: 90%;
+  max-width: 600px;
+  padding: 2.5rem 1.5rem;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.home-content h1 {
+  font-size: clamp(1.8rem, 5vw, 2.5rem);
+  margin-bottom: 1rem;
+  color: #1a365d;
+}
+
+.home-content p {
+  font-size: clamp(1rem, 3vw, 1.2rem);
+  margin-bottom: 2.5rem;
+  color: #4a5568;
+  line-height: 1.6;
+}
+
+.button-container {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 0.8rem 2rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  min-width: 140px;
+}
+
+.login-btn {
+  background-color: #4299e1;
+  color: white;
+}
+
+.login-btn:hover {
+  background-color: #3182ce;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(66, 153, 225, 0.3);
+}
+
+.signup-btn {
+  background-color: #48bb78;
+  color: white;
+}
+
+.signup-btn:hover {
+  background-color: #38a169;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(72, 187, 120, 0.3);
+}
+
+/* Media Queries for better responsiveness */
+@media (max-width: 480px) {
+  .home-content {
+    padding: 2rem 1rem;
+  }
+
+  .button-container {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .btn {
+    width: 100%;
+    padding: 1rem;
+  }
+}
